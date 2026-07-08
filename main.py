@@ -7,6 +7,7 @@ from asteroidfield import AsteroidField
 from logger import log_event
 import sys
 from shot import Shot
+from scores import Score
 
 def main():
     print(f"Starting Asteroids with pygame version {pygame.version.ver}")
@@ -38,6 +39,9 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
+        
+        display_score = Score(score)
+        display_score.to_screen(screen)
 
         # updating and drawing player to screen 
         updatable.update(dt)
