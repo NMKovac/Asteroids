@@ -1,11 +1,11 @@
 import pygame
+from text import Text
 from constants import SCREEN_HEIGHT
 
-class Score():
+class Score(Text):
     def __init__(self, score, text_col="white", x=10, y=10):
-        self.text = f"Score: {score}"
-        self.text_col = text_col
-        self.position = (x, y)
+        super().__init__(score, text_col, x, y)
+        self.text = f"Score: {self.text}"
 
     def to_screen(self, screen):
         font = pygame.font.SysFont('Arial', 20)

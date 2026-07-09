@@ -8,6 +8,34 @@ from logger import log_event
 import sys
 from shot import Shot
 from scores import Score
+from title_card import TitleCard
+
+def title():
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock()
+    dt = 0.0
+    
+
+    while True:
+        # basically boilerplate for the game environment
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+        screen.fill("black")
+        display_title = TitleCard("ASTEROIDS", 100)
+        display_title.to_screen(screen)
+
+        start_msg = TitleCard("press SPACE to start", 20, "white",
+                              SCREEN_WIDTH/4, display_title.position[1] + 120)
+        start_msg.to_screen(screen)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            main()
+
+        pygame.display.flip()
+        dt = clock.tick(60) / 1000
 
 def main():
     print(f"Starting Asteroids with pygame version {pygame.version.ver}")
@@ -37,9 +65,9 @@ def main():
         # basically boilerplate for the game environment
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                sys.exit()
         screen.fill("black")
-        
+
         display_score = Score(score)
         display_score.to_screen(screen)
 
@@ -53,7 +81,7 @@ def main():
             if (new_player.collides_with(asteroid)):
                 log_event("player_hit")
                 print(f"Game Over! Score: {score}")
-                sys.exit()
+                title()
         # checks for shots hitting asteroids, splitting them accordingly
         for asteroid in asteroids:
             for shot in shots:
@@ -65,4 +93,4 @@ def main():
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
-main()
+title()
